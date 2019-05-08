@@ -1,0 +1,18 @@
+#Docker Composeのバージョン
+version: '3'
+#作成するコンテナを定義
+services:
+    nginx:
+        build: ./nginx
+        #ホスト側の81番ポートとコンテナ側の80番ポートをつなげる
+        ports:
+            - 81:80
+        volumes:
+            - ./source:/usr/share/nginx/html
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    php-fpm:
+        #元になるDockerfileがおいてあるパスを指定
+        build: ./php-fpm
+        #プログラムソースディレクトリをマウント
+        volumes:
+            - ./source:/var/www/html
