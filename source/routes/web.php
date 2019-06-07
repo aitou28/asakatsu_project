@@ -15,7 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::get('/testCache', function() {
+    Cache::put('name', 'aaa', 100);
+
+    return Cache::get('name');
 });
 
