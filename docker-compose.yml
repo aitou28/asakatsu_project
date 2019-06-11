@@ -26,7 +26,7 @@ services:
     mysql:
         image: mysql:5.7
         environment:
-            MYSQL_DATABASE: asakatsu
+            MYSQL_DATABASE: share_pic_app
             MYSQL_ROOT_PASSWORD: password
             MYSQL_USER: root
             MYSQL_PASSWORD: password
