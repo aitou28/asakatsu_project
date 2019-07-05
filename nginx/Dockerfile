@@ -2,12 +2,13 @@ FROM alpine:3.9
 
 # nginxのインストール
 RUN apk update && \
-    apk add --no-cache nginx
-
-RUN apk --update add tzdata && \
+    apk add --no-cache \
+    nginx=1.14.2-r1 && \
+    apk --update add tzdata && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     apk del tzdata && \
-    rm -rf /var/cache/apk/*
+    rm -rf /var/cache/apk/* && \
+    mkdir -p /run/nginx
 
 # ドキュメントルート
 COPY default.conf /etc/nginx/conf.d/default.conf
@@ -15,9 +16,7 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 # ポート設定
 EXPOSE 80
 
-RUN mkdir -p /run/nginx
+WORKDIR /var/www
 
 # フォアグラウンドでnginx実行
 CMD nginx -g "daemon off;"
-
-WORKDIR /var/www
