@@ -10,9 +10,6 @@ RUN apk update && \
     rm -rf /var/cache/apk/* && \
     mkdir -p /run/nginx
 
-# ドキュメントルート
-COPY default.conf /etc/nginx/conf.d/default.conf
-
 # ポート設定
 EXPOSE 80
 
