@@ -1,0 +1,41 @@
+#Docker Composeのバージョン
+version: '3'
+#作成するコンテナを定義
+services:
+    nginx:
+        build: ./nginx
+        #ホスト側の81番ポートとコンテナ側の80番ポートをつなげる
+        ports:
+            - 81:80
+        volumes:
+            - ./source:/var/www/html:cached
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    php-fpm:
+        #元になるDockerfileがおいてあるパスを指定
+        build: ./php-fpm
+        #プログラムソースディレクトリをマウント
+        volumes:
+            - ./source:/var/www/html:cached
+        depends_on:
+            - mysql
+    mysql:
+        image: mysql:5.7
+        environment:
+            MYSQL_DATABASE: share_pic_app
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_USER: root
+            MYSQL_PASSWORD: password
+            TZ: Asia/Tokyo
+        ports:
+            - 3306:3306
+        volumes:
+            #設定ファイル
+            - ./mysql/conf.d:/etc/mysql/conf.d:ro
+            #永続化
+            - ./mysql/data:/var/lib/mysql:cached
+            #ログ永続化
+            - ./log/mysql:/var/log/mysql:cached
+    redis:
+        image: redis:5.0.5
+        ports:
+            - 6379:6379 
