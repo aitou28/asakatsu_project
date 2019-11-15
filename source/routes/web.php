@@ -11,15 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
-Route::get('/testCache', function() {
-    Cache::put('name', 'aaa', 100);
-
-    return Cache::get('name');
-});
-
+// APIのURL以外のリクエストに対してはindexテンプレートを返す
+// 画面遷移はフロントエンドのVueRouterが制御する
+Route::get('/{any?}', function () {
+    return view('index');
+})->where('any', '.+');
