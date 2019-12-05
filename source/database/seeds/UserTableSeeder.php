@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
 
 class UserTableSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+
+        User::truncate();
         // $this->call(UsersTableSeeder::class);
         DB::table('users')->insert(
           [
@@ -44,8 +47,8 @@ class UserTableSeeder extends Seeder
             ],
             [
               'id' => 5,
-              'name' => 'テスト次郎',
-              'email' => 'testjiro@example.com',
+              'name' => 'テスト123',
+              'email' => 'test123@example.com',
               'password' => 'password',
               'created_at' => '2018-05-01 00:00:00',
             ],
